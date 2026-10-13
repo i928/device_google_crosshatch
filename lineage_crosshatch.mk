@@ -28,6 +28,10 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 
 $(call inherit-product, vendor/google/crosshatch/crosshatch-vendor.mk)
 
+# Ship APEXes uncompressed: compressed .capex are unpacked to /data on the first
+# boot after every update (~5 s on sunfish). Costs ~150 MB more in super.
+PRODUCT_COMPRESSED_APEX := false
+
 # GApps: CROSSHATCH_GAPPS=full, mini (default) or none, e.g.
 #   CROSSHATCH_GAPPS=none m evolution
 # none is a de-Googled build (WITH_GMS=false). Same switch as sunfish; the
