@@ -36,6 +36,11 @@ WITHOUT_RESERVED_SIZE := true
 # SELinux
 BOARD_SEPOLICY_DIRS += device/google/crosshatch/sepolicy-lineage/dynamic
 BOARD_SEPOLICY_DIRS += device/google/crosshatch/sepolicy-lineage/vendor
+# prebuilts/extra-apps is untracked local content (see device.mk); skip its
+# sepolicy when a freshly synced tree does not have it.
+ifneq ($(wildcard device/google/crosshatch/prebuilts/extra-apps/sepolicy/file_contexts),)
+BOARD_VENDOR_SEPOLICY_DIRS += device/google/crosshatch/prebuilts/extra-apps/sepolicy
+endif
 
 # Verified Boot
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
