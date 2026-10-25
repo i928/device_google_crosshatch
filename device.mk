@@ -841,6 +841,9 @@ CROSSHATCH_JNI_DROP := $(foreach a,$(notdir $(wildcard device/google/crosshatch/
 PRODUCT_COPY_FILES := $(foreach f,$(PRODUCT_COPY_FILES),\
     $(if $(strip $(foreach a,$(CROSSHATCH_JNI_DROP),$(findstring /jni/$(a)/,$(f)))),,$(f)))
 endif
+# Same for the apps left out above (CROSSHATCH_EXCLUDED_APPS).
+PRODUCT_COPY_FILES := $(foreach f,$(PRODUCT_COPY_FILES),\
+    $(if $(strip $(foreach a,$(CROSSHATCH_EXCLUDED_APPS),$(findstring /jni/$(a)/,$(f)))),,$(f)))
 # Apks shipped only to be copied to Download/precopy at boot, not installed:
 # ~/extraAPKs/copy/*.apk -> prebuilt_etc precopy_<name> in /product/etc/precopy
 # (see run.sh), copied out by the precopy.sh boot script.
