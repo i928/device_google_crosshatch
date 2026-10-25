@@ -816,6 +816,10 @@ PRODUCT_PACKAGES += $(foreach apkset,$(USER_APP_SETS_BP),$(basename $(notdir $(a
 USER_APP_PERMS_BP := $(wildcard device/google/crosshatch/prebuilts/extra-apps/prebuilt/privapp-permissions-*.xml)
 PRODUCT_PACKAGES += $(foreach xml,$(USER_APP_PERMS_BP),$(notdir $(xml)))
 endif
+# extra-apps is shared with sunfish; these don't fit crosshatch's 4.07 GB
+# super group next to Evo GApps (install them from Play instead).
+CROSSHATCH_EXCLUDED_APPS := map tether
+PRODUCT_PACKAGES := $(filter-out $(CROSSHATCH_EXCLUDED_APPS),$(PRODUCT_PACKAGES))
 # Native libs of preinstalled apps that ship them compressed, unpacked beside
 # the untouched apk (/product/app/<app>/lib/<isa>/) so the apk keeps its own
 # signature and can be updated (Play, ReVanced Manager) -- the way OEM
