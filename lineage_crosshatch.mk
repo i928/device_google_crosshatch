@@ -27,3 +27,40 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     DeviceProduct=crosshatch
 
 $(call inherit-product, vendor/google/crosshatch/crosshatch-vendor.mk)
+
+# GApps: CROSSHATCH_GAPPS=full, mini (default) or none, e.g.
+#   CROSSHATCH_GAPPS=none m evolution
+# none is a de-Googled build (WITH_GMS=false). Same switch as sunfish; the
+# other flags are stated explicitly so a diff against sunfish shows the choice.
+# GApps are built in: with all four partitions on EROFS nothing can be
+# flashed into them after the ROM.
+CROSSHATCH_GAPPS ?= mini
+ifeq ($(filter full mini none,$(CROSSHATCH_GAPPS)),)
+$(error CROSSHATCH_GAPPS=$(CROSSHATCH_GAPPS): use full, mini or none)
+endif
+EVO_BUILD_TYPE := Unofficial
+TARGET_USES_PICO_GAPPS := false
+TARGET_DISABLE_EPPE := false
+
+ifeq ($(CROSSHATCH_GAPPS),none)
+WITH_GMS := false
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/apex/com.google.android.permission.apex
+else
+WITH_GMS := true
+ifeq ($(CROSSHATCH_GAPPS),full)
+TARGET_USES_MINI_GAPPS := false
+else
+TARGET_USES_MINI_GAPPS := true
+endif
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/app/GoogleExtShared/GoogleExtShared.apk \
+    system/app/GooglePrintRecommendationService/GooglePrintRecommendationService.apk \
+    system/apex/com.google.android.permission.apex \
+    system/etc/permissions/privapp-permissions-google.xml \
+    system/etc/permissions/privapp_allowlist_com.google.android.ext.services.xml \
+    system/priv-app/GoogleExtServices/GoogleExtServices.apk \
+    system/priv-app/DocumentsUIGoogle/DocumentsUIGoogle.apk \
+    system/priv-app/TagGoogle/TagGoogle.apk \
+    system/priv-app/GooglePackageInstaller/GooglePackageInstaller.apk
+endif
