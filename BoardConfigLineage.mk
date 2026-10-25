@@ -7,11 +7,15 @@
 # Kernel
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
 TARGET_COMPILE_WITH_MSM_KERNEL := true
-# TARGET_KERNEL_CLANG_VERSION := r416183b
-# TARGET_KERNEL_CLANG_PATH := $(abspath .)/prebuilts/clang/kernel/$(HOST_PREBUILT_TAG)/clang-$(TARGET_KERNEL_CLANG_VERSION)
+# i928 kernel_google_msm-4.9 bka_pub (Evo msm-4.9 bka + our crosshatch work:
+# KernelSU-Next + SUSFS, EROFS, Clang 23 fixes) instead of Evo's kernel_google_b1c1.
+TARGET_KERNEL_CLANG_PATH := $(abspath prebuilts/clang/host/$(HOST_PREBUILT_TAG)/clang-r614150)
 TARGET_KERNEL_CONFIG := b1c1_defconfig
-# TARGET_KERNEL_LLVM_BINUTILS := false
-TARGET_KERNEL_SOURCE := kernel/google/b1c1
+TARGET_KERNEL_LLVM_BINUTILS := false
+# ld.lld for the LTO link (Clang 23 ships no LLVMgold.so for gold). Only LD:
+# LLVM_BINUTILS would also force LLVM=1 LLVM_IAS=1.
+TARGET_KERNEL_ADDITIONAL_FLAGS := LD=$(TARGET_KERNEL_CLANG_PATH)/bin/ld.lld
+TARGET_KERNEL_SOURCE := kernel/google/msm-4.9
 TARGET_NEEDS_DTBOIMAGE := true
 
 # Manifests
