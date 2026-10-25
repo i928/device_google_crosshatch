@@ -6,10 +6,6 @@
   "branch": "lineage-22.2"
   },
   {
-    "repository": "kernel_google_b1c1",
-    "target_path": "kernel/google/b1c1"
-  },
-  {
     "repository": "vendor_google_crosshatch",
     "target_path": "vendor/google/crosshatch"
   },
