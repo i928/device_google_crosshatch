@@ -820,6 +820,10 @@ endif
 # super group next to Evo GApps (install them from Play instead).
 CROSSHATCH_EXCLUDED_APPS := map tether messenger
 PRODUCT_PACKAGES := $(filter-out $(CROSSHATCH_EXCLUDED_APPS),$(PRODUCT_PACKAGES))
+# Newer extra-apps builds of GApps apps: drop the GApps copy (gapps-dedup/).
+PRODUCT_PACKAGES += \
+    $(if $(filter Gboard,$(PRODUCT_PACKAGES)),crosshatch_dedup_gboard) \
+    $(if $(filter message,$(PRODUCT_PACKAGES)),crosshatch_dedup_messages)
 # Native libs of preinstalled apps that ship them compressed, unpacked beside
 # the untouched apk (/product/app/<app>/lib/<isa>/) so the apk keeps its own
 # signature and can be updated (Play, ReVanced Manager) -- the way OEM

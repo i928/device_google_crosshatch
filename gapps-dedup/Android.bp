@@ -1,0 +1,21 @@
+// Evo GApps ship older copies of apps that prebuilts/extra-apps already
+// carries in a newer version. Android only runs the newer one, so the GApps
+// copy is dead weight in the full super group. device.mk installs each of
+// these markers only when the extra-apps replacement is installed; its
+// overrides then keep the GApps copy out of /product.
+
+prebuilt_etc {
+    name: "crosshatch_dedup_gboard",
+    src: "dedup.txt",
+    filename: "crosshatch_dedup_gboard.txt",
+    product_specific: true,
+    overrides: ["LatinIMEGooglePrebuilt"],
+}
+
+prebuilt_etc {
+    name: "crosshatch_dedup_messages",
+    src: "dedup.txt",
+    filename: "crosshatch_dedup_messages.txt",
+    product_specific: true,
+    overrides: ["PrebuiltBugle"],
+}
