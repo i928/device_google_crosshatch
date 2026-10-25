@@ -818,7 +818,7 @@ PRODUCT_PACKAGES += $(foreach xml,$(USER_APP_PERMS_BP),$(notdir $(xml)))
 endif
 # extra-apps is shared with sunfish; these don't fit crosshatch's 4.07 GB
 # super group next to Evo GApps (install them from Play instead).
-CROSSHATCH_EXCLUDED_APPS := map tether
+CROSSHATCH_EXCLUDED_APPS := map tether messenger
 PRODUCT_PACKAGES := $(filter-out $(CROSSHATCH_EXCLUDED_APPS),$(PRODUCT_PACKAGES))
 # Native libs of preinstalled apps that ship them compressed, unpacked beside
 # the untouched apk (/product/app/<app>/lib/<isa>/) so the apk keeps its own
